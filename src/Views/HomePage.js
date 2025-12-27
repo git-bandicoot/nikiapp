@@ -12,8 +12,8 @@ const HomePage = () => {
 
     return (
         <div className="cafe-homepage">
-            <h1>Welcome to Webcafe AI</h1>
-            <p>Your go-to solution for AI-driven web applications.</p>
+            <h1>NĪKI</h1>
+            <p>Where to next?</p>
             <div className={`cafe-color-box ${isBlue ? 'cafe-blue' : 'cafe-red'}`}></div>
             <button className="cafe-button" onClick={toggleColor}>Change Color</button>
         </div>
