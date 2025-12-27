@@ -1,7 +1,8 @@
 /* src/Views/HomePage.css */
 .cafe-homepage {
     text-align: center;
-    padding: 50px;
+    padding: 180px;
+    background-color: rgb(142, 188, 211)
 }
 
 .cafe-homepage h1 {
@@ -19,23 +20,29 @@
     height: 100px;
     margin: 20px auto;
     transition: background-color 0.5s ease-in-out;
+    border: 2px solid black;
+    /* added black border */
+    box-sizing: border-box;
+    /* ensures border doesn't increase box size */
 }
 
 .cafe-color-box.cafe-red {
-    background-color: red;
+    background-color: rgb(226, 209, 195);
 }
 
 .cafe-color-box.cafe-blue {
-    background-color: blue;
+    background-color: rgb(142, 188, 211);
 }
+
 
 .cafe-button {
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
+    background-color: rgb(226, 209, 195);
     transition: background-color 0.3s ease;
 }
 
 .cafe-button:hover {
-    background-color: #ddd;
+    background-color: rgb(202, 173, 150);
 }

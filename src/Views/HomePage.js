@@ -15,7 +15,7 @@ const HomePage = () => {
             <h1>NĪKI</h1>
             <p>Where to next?</p>
             <div className={`cafe-color-box ${isBlue ? 'cafe-blue' : 'cafe-red'}`}></div>
-            <button className="cafe-button" onClick={toggleColor}>Change Color</button>
+            <button className="cafe-button" onClick={toggleColor}>Create Aesthetic</button>
         </div>
     );
 };
