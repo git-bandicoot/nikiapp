@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>NIKI UI Swipe Test</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+    <main class="page" aria-label="NIKI landing mock">
+        <section class="panels" aria-label="Swipe panels">
+            <!-- PANEL 1 (Homepage - NO texture overlay) -->
+            <article class="panel panel--home" aria-label="Home panel">
+                <div class="panel-inner">
+                    <header class="brand">
+                        <h1 class="brand-title">NIKI</h1>
+                        <div class="brand-sub">TRAVEL AESTHETIC SPECIALIST</div>
+                    </header>
+
+                    <div class="ornament-wrap" aria-hidden="true">
+                        <img class="ornament" src="./assets/nikiapp_ornamentblue.png" alt="" />
+                    </div>
+
+                    <div class="bottom-map" aria-hidden="true">
+                        <img class="bottom-map-img" src="./assets/nikiapp_homebottom.png" alt="" />
+                    </div>
+                </div>
+            </article>
+
+            <!-- PANEL 2 (Texture overlay @ 30%) -->
+            <article class="panel panel--textured" aria-label="Assistant panel">
+                <div class="panel-inner panel-inner--middle">
+                    <section class="assistant" aria-label="Assistant messages">
+                        <div class="bubble bubble--active">
+                            FINISH MAKEUP, WE’RE OUT IN 5 MINUTES.
+                        </div>
+
+                        <div class="bubble">
+                            YELLOW CAB WILL BE HERE FOR YOUR DINNER AT ROOFTOP ISTANBUL.
+                        </div>
+
+                        <div class="bubble bubble--ghost">
+                            CHECK OUT THEIR MENU OR BE PRESENT, YOU’RE IN TURKEY.
+                        </div>
+                    </section>
+
+                    <div class="top-right-mini" aria-label="Mini map card">
+                        <div class="mini-card">
+                            <img class="mini-map-img" src="./assets/nikiapp_mapblue.png" alt="Map preview" />
+                        </div>
+                    </div>
+
+                    <!-- LIVE CLOCK (local time) -->
+                    <div class="time" aria-label="Local time">
+                        <div class="clock" id="clock" data-time="00:00" aria-label="Time display">
+                            <span class="d" data-slot="h1" aria-hidden="true"></span>
+                            <span class="d" data-slot="h2" aria-hidden="true"></span>
+                            <span class="d d--colon" data-slot="c1" aria-hidden="true"></span>
+                            <span class="d" data-slot="m1" aria-hidden="true"></span>
+                            <span class="d" data-slot="m2" aria-hidden="true"></span>
+                        </div>
+                        <div class="sr-only" id="clockText">00:00</div>
+                    </div>
+
+                    <h2 class="section-title">CHOOSE YOUR FAVORITE PICS</h2>
+
+                    <section class="photo-row" aria-label="Choose your favorite pics">
+                        <figure class="photo">
+                            <img src="./assets/choose_you_favorite_pics_1.png" alt="Favorite pic 1" />
+                        </figure>
+                        <figure class="photo">
+                            <img src="./assets/choose_you_favorite_pics_2.png" alt="Favorite pic 2" />
+                        </figure>
+                    </section>
+
+                    <div class="dots" aria-hidden="true">
+                        <span class="dot dot--active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+                    <button class="btn" type="button">OPEN AI ASSISTANT</button>
+                </div>
+            </article>
+
+            <!-- PANEL 3 (Texture overlay @ 30%) -->
+            <article class="panel panel--textured" aria-label="Shopping panel">
+                <div class="panel-inner">
+                    <div class="right-card">
+                        <div class="right-card-top">
+                            <img class="right-ornament" src="./assets/nikiapp_ornamentblue.png" alt="" />
+                        </div>
+
+                        <div class="right-menu">
+                            <div class="right-menu-title">ITINERARIES</div>
+                            <div class="right-menu-title">MY CLOSET</div>
+                            <div class="right-menu-title right-menu-title--strong">LOCAL SHOPPING</div>
+                            <div class="right-menu-title right-menu-title--muted">FLIGHT PREP</div>
+                            <div class="right-menu-title right-menu-title--muted">SETTINGS</div>
+                        </div>
+
+                        <div class="shop-block">
+                            <div class="shop-meta">BAZAAR ISTANBUL ALANYA | OPEN UNTIL 19:00</div>
+                            <div class="shop-grid">
+                                <figure class="shop-img">
+                                    <img src="./assets/localshopping_firstshop_photo1.png" alt="Bazaar item 1" />
+                                </figure>
+                                <figure class="shop-img">
+                                    <img src="./assets/localshopping_firstshop_photo2.png" alt="Bazaar item 2" />
+                                </figure>
+                                <figure class="shop-img">
+                                    <img src="./assets/localshopping_firstshop_photo3.png" alt="Bazaar item 3" />
+                                </figure>
+                            </div>
+                        </div>
+
+                        <div class="shop-block">
+                            <div class="shop-meta">AL BEYAN FASHION | CLOSED UNTIL MON 09:00</div>
+                            <div class="shop-grid">
+                                <figure class="shop-img">
+                                    <img src="./assets/localshopping_secondshop_photo1.png" alt="Al Beyan item 1" />
+                                </figure>
+                                <figure class="shop-img">
+                                    <img src="./assets/localshopping_secondshop_photo2.png" alt="Al Beyan item 2" />
+                                </figure>
+                                <figure class="shop-img">
+                                    <img src="./assets/localshopping_secondshop_photo3.png" alt="Al Beyan item 3" />
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

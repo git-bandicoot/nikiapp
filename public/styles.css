@@ -1,0 +1,424 @@
+:root {
+    --bg: #8dbcd0;
+    --ink: rgba(0, 0, 0, .86);
+    --ink-soft: rgba(0, 0, 0, .62);
+    --panel-sep: rgba(255, 255, 255, .22);
+    --bubble-bg: rgba(255, 255, 255, .12);
+    --bubble-ghost: rgba(255, 255, 255, .18);
+    --stroke: rgba(0, 0, 0, .22);
+    --radius: 18px;
+    --font: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--ink);
+}
+
+.page {
+    min-height: 100%;
+    background: var(--bg);
+    position: relative;
+}
+
+/* PANELS: mobile horizontal snap */
+.panels {
+    height: 100vh;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.panels::-webkit-scrollbar {
+    display: none
+}
+
+.panel {
+    flex: 0 0 100vw;
+    height: 100%;
+    scroll-snap-align: start;
+    position: relative;
+    background: var(--bg);
+}
+
+.panel:not(:last-child) {
+    box-shadow: inset -1px 0 0 var(--panel-sep);
+}
+
+.panel-inner {
+    height: 100%;
+    padding: 28px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Desktop: 3 columns */
+@media (min-width:980px) {
+    .panels {
+        overflow-x: hidden;
+        scroll-snap-type: none;
+    }
+
+    .panel {
+        flex: 1 1 33.33%;
+    }
+}
+
+/* Texture overlay for non-home panels */
+.panel--textured::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("./assets/non-homepage_30PercentOpacity_background.png") center/cover no-repeat;
+    opacity: .30;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* HOME */
+.brand {
+    text-align: center;
+    margin-top: 34px;
+}
+
+.brand-title {
+    margin: 0;
+    font-size: 58px;
+    font-weight: 400;
+    letter-spacing: 6px;
+}
+
+.brand-sub {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--ink-soft);
+}
+
+.ornament-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+.ornament {
+    width: min(260px, 70vw);
+    height: auto;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, .08));
+}
+
+.bottom-map {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.bottom-map-img {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    opacity: .85;
+}
+
+/* ASSISTANT BUBBLES */
+.panel-inner--middle {
+    padding-top: 22px
+}
+
+.assistant {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 6px;
+}
+
+.bubble {
+    width: min(460px, 92%);
+    margin: 0 auto;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: var(--bubble-bg);
+    border: 1px solid rgba(0, 0, 0, .18);
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: rgba(0, 0, 0, .62);
+    backdrop-filter: blur(2px);
+}
+
+.bubble--active {
+    background: rgba(255, 255, 255, .18);
+    color: rgba(0, 0, 0, .70);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, .55);
+}
+
+.bubble--ghost {
+    opacity: .40;
+    background: var(--bubble-ghost);
+}
+
+/* Top-right map card */
+.top-right-mini {
+    position: absolute;
+    top: 22px;
+    right: 18px;
+    width: 170px;
+    z-index: 3;
+}
+
+.mini-card {
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, .20);
+    background: rgba(255, 255, 255, .08);
+    overflow: hidden;
+}
+
+.mini-map-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* CLOCK (sprite digits) */
+.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    position: relative;
+}
+
+.clock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Each digit is a cropped window onto the sprite sheet */
+.d {
+    width: 64px;
+    height: 92px;
+    display: inline-block;
+    background-image: url("./assets/nikiapp_clocknumbersblue.png");
+    background-repeat: no-repeat;
+    background-size: 400px 520px;
+    /* sprite scaling */
+    filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .06));
+}
+
+/* Colon is a separate crop too */
+.d--colon {
+    width: 22px;
+    height: 92px;
+}
+
+/* Title */
+.section-title {
+    margin: 8px 0 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: rgba(0, 0, 0, .78);
+}
+
+/* Photos row */
+.photo-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 6px;
+}
+
+.photo {
+    width: 150px;
+    height: 190px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, .18);
+    background: rgba(255, 255, 255, .10);
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Dots */
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 4px;
+    opacity: .55;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 99px;
+    background: rgba(0, 0, 0, .55);
+}
+
+.dot--active {
+    opacity: 1;
+}
+
+/* Button */
+.btn {
+    margin: 10px auto 0;
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, .22);
+    background: rgba(255, 255, 255, .20);
+    font-family: var(--font);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, .78);
+    cursor: pointer;
+    transition: transform .12s ease, background .12s ease;
+}
+
+.btn:active {
+    transform: translateY(1px)
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, .28)
+}
+
+/* RIGHT PANEL CARD */
+.right-card {
+    margin-top: 10px;
+    border-radius: 26px;
+    border: 1px solid rgba(0, 0, 0, .18);
+    background: rgba(255, 255, 255, .10);
+    padding: 16px 14px 18px;
+    height: calc(100% - 22px);
+    overflow: auto;
+    backdrop-filter: blur(2px);
+}
+
+.right-card-top {
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.right-ornament {
+    width: 110px;
+    height: auto;
+    opacity: .95;
+}
+
+.right-menu {
+    margin-top: 6px;
+    padding: 8px 6px 2px;
+    text-align: left;
+}
+
+.right-menu-title {
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, .62);
+}
+
+.right-menu-title--strong {
+    color: rgba(0, 0, 0, .82);
+}
+
+.right-menu-title--muted {
+    opacity: .55;
+}
+
+/* Shop blocks */
+.shop-block {
+    margin-top: 12px;
+}
+
+.shop-meta {
+    font-size: 6px;
+    letter-spacing: 1.4px;
+    color: rgba(0, 0, 0, .70);
+    margin: 10px 2px 6px;
+    text-transform: uppercase;
+}
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.shop-img {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, .16);
+    background: rgba(255, 255, 255, .10);
+    aspect-ratio: 1/1;
+}
+
+.shop-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Accessibility helper */
+.sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Small phones: tighten */
+@media (max-width:360px) {
+    .brand-title {
+        font-size: 48px
+    }
+
+    .photo {
+        width: 140px;
+        height: 178px
+    }
+
+    .d {
+        width: 56px;
+        height: 82px
+    }
+
+    .d--colon {
+        width: 18px
+    }
+}

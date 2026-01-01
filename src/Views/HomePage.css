@@ -1,48 +1,6 @@
 /* src/Views/HomePage.css */
 .cafe-homepage {
-    text-align: center;
+    text-align: center; 
     padding: 50px;
     background-color: rgb(142, 188, 211)
-}
-
-.cafe-homepage h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-}
-
-.cafe-homepage p {
-    font-size: 1.5rem;
-    color: #555;
-}
-
-.cafe-color-box {
-    width: 100px;
-    height: 100px;
-    margin: 20px auto;
-    transition: background-color 0.5s ease-in-out;
-    border: 2px solid black;
-    /* added black border */
-    box-sizing: border-box;
-    /* ensures border doesn't increase box size */
-}
-
-.cafe-color-box.cafe-red {
-    background-color: rgb(226, 209, 195);
-}
-
-.cafe-color-box.cafe-blue {
-    background-color: rgb(142, 188, 211);
-}
-
-
-.cafe-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: rgb(226, 209, 195);
-    transition: background-color 0.3s ease;
-}
-
-.cafe-button:hover {
-    background-color: rgb(202, 173, 150);
 }
