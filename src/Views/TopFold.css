@@ -65,10 +65,11 @@
   left:var(--wickX);
   top:var(--wickY);
   transform:translate(-50%,-50%);
-  width:clamp(10px,4vw,15px);
+  width:clamp(10px,4vw,10px);
   height:auto;
   pointer-events:none;
   filter:drop-shadow(0 10px 18px rgba(0,0,0,0.16));
+  z-index:1; /* stays behind UI */
 }
 
 /* RIGHT COPY */
@@ -83,20 +84,32 @@
   width:min(740px,100%);
   margin:0 auto;
   text-align:center;
-  z-index:2;
+  z-index:4;
 
-  /* move the whole stack upward to match the top X */
   transform:translate(0,clamp(-90px,-8vh,-40px));
 
-  /* ↓ single-knob vertical tuning */
-  --goldYOffset:clamp(30px,8vh,30px);
+  --goldYOffset:clamp(24px,8vh,90px);
+  --ctaYOffset:clamp(0px,4vh,28px);
+
+  --textYOffset:0px;
+  --textXOffset:-60px;
+
+  --tagYOffset:-10px;
+  --ctaXOffset:-70px;
+
+  --goldLift:0px;
+  --goldScale:1;
+}
+
+.topfold-textGroup{
+  transform:translate(var(--textXOffset,0px),var(--textYOffset,0px));
 }
 
 .topfold-wordmark{
   margin:0;
-  font-weight:400;
+  font-weight:200;
   font-size:clamp(56px,6.4vw,92px);
-  letter-spacing:0.28em;
+  letter-spacing:0.4em;
   text-transform:uppercase;
   color:rgba(15,31,40,0.45);
 }
@@ -107,59 +120,295 @@
   white-space:nowrap;
   font-size:clamp(13px,1.4vw,20px);
   line-height:1.4;
-  letter-spacing:0.28em;
+  letter-spacing:0.5em;
   text-transform:uppercase;
   color:rgba(15,31,40,0.55);
+  transform:translateY(var(--tagYOffset,0px));
 }
 
-/* SINGLE CTA (replaces two buttons) */
+/* CTA AREA */
 .topfold-cta{
-  margin-top:clamp(18px,3.8vh,34px);
+  position:relative;
+
+  /* UPDATED: red spacing (tagline -> WELCOME) doubled */
+  margin-top:clamp(36px,7.6vh,68px);
+
   display:flex;
-  justify-content:center;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+
+  transform:translate(var(--ctaXOffset,0px),var(--ctaYOffset,0px));
+  z-index:5;
 }
 
 .topfold-btn{
   border:none;
   cursor:pointer;
   border-radius:999px;
-  padding:10px 18px;
+  padding:9px 18px;
   font:inherit;
+  font-size:0.7em;
   font-weight:500;
-  transition:background-color 160ms ease,transform 160ms ease,box-shadow 160ms ease;
+  transition:background-color 160ms ease,transform 160ms ease,box-shadow 160ms ease,color 160ms ease;
 }
 
 .topfold-btn:active{
   transform:translateY(1px);
 }
 
-/* long + narrow + candle-gold */
+/* long + narrow + candle-gold (WELCOME) */
 .topfold-btnLong{
   background:var(--candleGold);
   color:rgb(142,188,211);
-  width:clamp(200px,34vw,2000px);
+  width:clamp(308px,40vw,392px);
   padding:5px 22px;
-  letter-spacing:0.02em;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+
+  position:relative;
+  overflow:hidden;
 }
 
 .topfold-btnLong:hover{
   background:var(--candleGoldHover);
   color:#e4d2bf;
-  transition:color 250ms ease,transform 500ms ease;
 }
 
-/* AI LOGO — independently positioned */
+/* WELCOME scroll-on-language-switch */
+.topfold-btnLong .welcomeFace{
+  position:relative;
+  height:1em;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.topfold-btnLong .welcomeLayer{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:1em;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1em;
+  white-space:nowrap;
+  will-change:transform,opacity;
+  transition:transform 700ms cubic-bezier(0.2,0.8,0.2,1),opacity 260ms ease;
+}
+
+.topfold-btnLong .welcomeLayerPrev{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.topfold-btnLong .welcomeLayerNext{
+  transform:translateY(110%);
+  opacity:0;
+}
+
+.topfold-btnLong .welcomeFace.isShift .welcomeLayerPrev{
+  transform:translateY(-110%);
+  opacity:0;
+}
+
+.topfold-btnLong .welcomeFace.isShift .welcomeLayerNext{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* double-border blue button */
+.topfold-btnDouble{
+  background:var(--bg);
+  color:rgba(15,31,40,0.45);
+  width:clamp(308px,40vw,490px);
+  padding:5px 22px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+
+  border:1px solid rgba(15,31,40,0.75);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,0.95);
+
+  position:relative;
+  overflow:hidden; /* keep animation inside pill */
+
+  /* KEY: define the single-line height used by the ticker */
+  --tickH:1em;
+}
+
+.topfold-btnDouble:hover{
+  background:rgba(255,255,255,0.95);
+  color:rgba(15,31,40,0.55);
+}
+
+.topfold-btnDouble.isBlueLocked{
+  background:var(--bg);
+  color:rgba(15,31,40,0.45);
+}
+
+.topfold-btnDouble.isBlueLocked:hover{
+  background:var(--bg);
+  color:rgba(15,31,40,0.45);
+}
+
+.topfold-btnDouble.isHold{
+  background:var(--bg);
+  color:rgba(15,31,40,0.45);
+}
+
+.topfold-btnDouble.isHold:hover{
+  background:var(--bg);
+  color:rgba(15,31,40,0.45);
+}
+
+.topfold-btnDouble:disabled{
+  cursor:default;
+  opacity:.8;
+}
+
+/* ---------- stable size + scroll transition into ticker ---------- */
+.topfold-btnDouble .btnFace{
+  position:relative;
+  height:var(--tickH);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  width:100%;
+}
+
+.topfold-btnDouble .btnLayer{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:var(--tickH);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  line-height:var(--tickH);
+  white-space:nowrap;
+  will-change:transform,opacity;
+}
+
+.topfold-btnDouble .btnLayerLabel{
+  transform:translateY(0);
+  opacity:1;
+  transition:transform 420ms cubic-bezier(0.2,0.8,0.2,1),opacity 260ms ease;
+}
+
+.topfold-btnDouble .btnLayerTicker{
+  transform:translateY(110%);
+  opacity:0;
+  transition:transform 420ms cubic-bezier(0.2,0.8,0.2,1),opacity 260ms ease;
+}
+
+.topfold-btnDouble.isTicker .btnLayerLabel{
+  transform:translateY(-110%);
+  opacity:0;
+}
+
+.topfold-btnDouble.isTicker .btnLayerTicker{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.topfold-btnDouble .btnTickerViewport{
+  height:var(--tickH);
+  width:100%;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.topfold-btnDouble .btnTickerTrack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  will-change:transform;
+  transform:translateY(calc(var(--tickIndex,0) * -1 * var(--tickH)));
+  transition:transform 380ms cubic-bezier(0.3,0.8,0.2,.8);
+}
+
+.topfold-btnDouble .btnTickerItem{
+  height:var(--tickH);
+  line-height:var(--tickH);
+  white-space:nowrap;
+  opacity:0.3;
+}
+
+/* AI LOGO — independently positioned + animated via vars */
 .topfold-goldWrap{
   position:absolute;
   left:50%;
   top:100%;
-  transform:translate(-80%,var(--goldYOffset,24px));
+  transform:translate(-90%,calc(var(--goldYOffset,24px) + var(--goldLift,0px))) scale(var(--goldScale,1));
   width:clamp(180px,26vw,350px);
   pointer-events:none;
+
+  transition:transform 3000ms cubic-bezier(0.2,0.8,0.2,1);
+  will-change:transform;
 }
 
 .topfold-goldLogo{
   width:140%;
   height:auto;
   display:block;
+}
+
+/* CONTACT NIKI hover flow (peeking AI logo) */
+.topfold-copy.isContactHover{
+  --goldLift:-15px;
+  --goldScale:1.16;
+}
+
+/* ---------- language picker ---------- */
+.topfold-langPick{
+  position:relative;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:center;
+  opacity:0.65;
+  z-index:6;
+  margin:0;
+}
+
+.langOpt{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  user-select:none;
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(15,31,40,0.55);
+}
+
+.langOpt input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.langDot{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  border:1px solid rgba(15,31,40,0.55);
+  box-shadow:inset 0 0 0 2px rgba(142,188,211,0.95);
+}
+
+.langOpt input:checked + .langDot{
+  box-shadow:inset 0 0 0 2px rgba(142,188,211,0.95),inset 0 0 0 999px rgba(15,31,40,0.22);
+  border-color:rgba(15,31,40,0.75);
+}
+
+.langLbl{
+  transform:translateY(0.5px);
 }
