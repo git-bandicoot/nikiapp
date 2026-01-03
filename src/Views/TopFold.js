@@ -9,7 +9,6 @@ const TopFold = () => {
   return (
     <section className="topfold-niki" aria-label="Top fold">
       <div className="topfold-shell">
-
         {/* LEFT ARCH */}
         <div className="topfold-left" aria-hidden="true">
           <div className="topfold-archFrame">
@@ -32,31 +31,25 @@ const TopFold = () => {
             <h1 className="topfold-wordmark">NIKI</h1>
 
             <p className="topfold-tag">
-              TRAVEL ITINERARIES, CURATED IN SECONDS.<br />
-              AESTHETIC ROUTES. SMART TIMING. ZERO HASSLE.
+              TRAVEL ITINERARIES, CURATED IN SECONDS.
             </p>
 
             <div className="topfold-cta">
-              <button className="topfold-btn topfold-btnPrimary" type="button">
+              <button className="topfold-btn topfold-btnLong" type="button">
                 Get started
               </button>
-              <button className="topfold-btn topfold-btnGhost" type="button">
-                See how it works
-              </button>
+            </div>
+
+            {/* AI LOGO UNDER TEXT */}
+            <div className="topfold-goldWrap" aria-hidden="true">
+              <img
+                className="topfold-goldLogo"
+                src={nikiAiLogo}
+                alt=""
+              />
             </div>
           </div>
-
-          {/* GOLD AI LOGO */}
-          <div className="topfold-goldWrap" aria-hidden="true">
-            <div className="topfold-goldGlow" />
-            <img
-              className="topfold-goldLogo"
-              src={nikiAiLogo}
-              alt=""
-            />
-          </div>
         </div>
-
       </div>
     </section>
   );
