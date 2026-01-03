@@ -11,8 +11,8 @@
   --blue:rgba(10,132,255,0.7);
 
   /* candle-like gold */
-  --candleGold:#c8a04a;
-  --candleGoldHover:#b8903f;
+  --candleGold:#e4d2bf;
+  --candleGoldHover:rgb(142,188,211);
 }
 
 .topfold-niki{
@@ -136,15 +136,16 @@
 /* long + narrow + candle-gold */
 .topfold-btnLong{
   background:var(--candleGold);
-  color:rgba(15,31,40,0.9);
-  width:clamp(260px,34vw,420px);
-  padding:10px 22px;
+  color:rgb(142,188,211);
+  width:clamp(200px,34vw,2000px);
+  padding:5px 22px;
   letter-spacing:0.02em;
-  box-shadow:0 10px 22px rgba(15,31,40,0.12);
 }
 
 .topfold-btnLong:hover{
   background:var(--candleGoldHover);
+  color:#e4d2bf;
+  transition:color 250ms ease,transform 500ms ease;
 }
 
 /* AI LOGO — independently positioned */
