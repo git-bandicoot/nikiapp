@@ -99,10 +99,27 @@
 
   --goldLift:0px;
   --goldScale:1;
+
+  /* NEW: used by WELCOME lift */
+  --welcomeLift:0px;
+
+  /* NEW: multiplies the tagline->CTA gap */
+  --welcomeGapMult:1;
+}
+
+/* NEW: WELCOME clicked state */
+.topfold-copy.isWelcomeExpanded{
+  --welcomeLift:-100px;
+  /* --welcomeGapMult:3; */
 }
 
 .topfold-textGroup{
-  transform:translate(var(--textXOffset,0px),var(--textYOffset,0px));
+  transform:
+    translate(
+      var(--textXOffset,0px),
+      calc(var(--textYOffset,0px) + var(--welcomeLift))
+    );
+  transition:transform 950ms cubic-bezier(0.2,0.8,0.2,1);
 }
 
 .topfold-wordmark{
@@ -130,8 +147,8 @@
 .topfold-cta{
   position:relative;
 
-  /* UPDATED: red spacing (tagline -> WELCOME) doubled */
-  margin-top:clamp(36px,7.6vh,68px);
+  /* UPDATED: allow multiplying the existing gap */
+  margin-top:calc(clamp(36px,7.6vh,68px) * var(--welcomeGapMult));
 
   display:flex;
   flex-direction:column;
@@ -411,4 +428,79 @@
 
 .langLbl{
   transform:translateY(0.5px);
+}
+
+.topfold-textStack{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.topfold-textGroup{
+  position:relative;
+  z-index:2;
+}
+
+.topfold-revealRow{
+  position:absolute;
+  left:38.5%;
+  top:90%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  gap:30px;
+
+  align-items:center;      /* ✅ vertical centering */
+  justify-content:center;  /* ✅ horizontal centering */
+
+  opacity:0;
+  z-index:6;
+  pointer-events:none;
+  user-select:none;
+
+  transition:opacity 1000ms ease;
+}
+
+.topfold-revealRow.isOn{
+  opacity:1;
+  pointer-events:auto;   /* ✅ clickable when shown */
+  transition-delay:500ms;
+}
+
+.topfold-revealRow img{
+  width:48px;
+  height:48px;
+  display:block;
+}
+
+.topfold-revealRow img.isNikiIcon{
+  width:48px;   /* change this */
+  height:48x;  /* change this */
+}
+
+.iconBtn{
+  border:none;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.iconBtn:active{
+  transform:translateY(1px);
+}
+
+/* size icons inside buttons */
+.topfold-revealRow .iconBtn img{
+  width:48px;
+  height:48px;
+  display:block;
+}
+
+/* larger NIKI icon still works */
+.topfold-revealRow .iconBtn img.isNikiIcon{
+  width:48px;
+  height:48px;
 }

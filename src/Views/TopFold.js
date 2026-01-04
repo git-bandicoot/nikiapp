@@ -4,6 +4,12 @@ import "./TopFold.css";
 import nikiAiLogo from "../assets/images/nikiapp_ailogo_v4_2.gif";
 import nikiLandingArc from "../assets/images/nikiapp_landingpage_arc_v1_5.jpg";
 import candleFlame from "../assets/images/flame-flicker.gif";
+import googleIcon from "../assets/images/google.png";
+import redditIcon from "../assets/images/reddit.png";
+import xIcon from "../assets/images/x.png";
+import metaIcon from "../assets/images/meta.png";
+import nikiIcon from "../assets/images/top_logo.png";
+
 
 const TopFold = () => {
   const [targetLang,setTargetLang] = useState("fr"); // "en","es","fr","it","de","ja"
@@ -22,6 +28,12 @@ const TopFold = () => {
 
   const [rotation,setRotation] = useState([]);
 
+  /* NEW: WELCOME moves text up once */
+  const [isWelcomeExpanded,setIsWelcomeExpanded] = useState("");
+
+  /* FIX: define welcomeSource + setter (removes eslint no-undef) */
+  const [welcomeSource,setWelcomeSource] = useState("");
+
   const hoverDelayRef = useRef(null);
   const tickerTimeoutRef = useRef(null);
   const holdIntervalRef = useRef(null);
@@ -29,7 +41,7 @@ const TopFold = () => {
 
   const showFlame = isFlameLocked || isWelcomeHover;
 
-  const welcomeLabel = useMemo(() => {
+  const baseWelcomeLabel = useMemo(() => {
     const map = {
       en:"WELCOME",
       es:"BIENVENIDO",
@@ -40,6 +52,13 @@ const TopFold = () => {
     };
     return map[targetLang] || "WELCOME";
   },[targetLang]);
+
+  const welcomeLabel = useMemo(() => {
+  if(!welcomeSource){
+    return baseWelcomeLabel;
+  }
+  return `${baseWelcomeLabel}, ${welcomeSource} USER`;
+},[baseWelcomeLabel,welcomeSource]);
 
   // WELCOME scroll-on-language-switch (700ms)
   const [welcomePrev,setWelcomePrev] = useState(null);
@@ -295,6 +314,10 @@ const TopFold = () => {
     setTickIndex(0);
   };
 
+  const handleIconClick = () => {
+  setIsWelcomeExpanded(false);
+};
+
   useEffect(() => {
     return () => {
       clearHoverDelay();
@@ -332,11 +355,66 @@ const TopFold = () => {
         </div>
 
         <div className="topfold-right">
-          <div className={`topfold-copy${isContactHover ? " isContactHover" : ""}`}>
-            <div className="topfold-textGroup">
-              <h1 className="topfold-wordmark">NIKI</h1>
-              <p className="topfold-tag">TRAVEL AESTHETIC SPECIALIST</p>
-            </div>
+          <div className={`topfold-copy${isContactHover ? " isContactHover" : ""}${isWelcomeExpanded ? " isWelcomeExpanded" : ""}`}>
+            <div className="topfold-textStack">
+              <div className="topfold-textGroup">
+                <h1 className="topfold-wordmark">NIKI</h1>
+                <p className="topfold-tag">TRAVEL AESTHETIC SPECIALIST</p>
+              </div>
+
+              <div className={`topfold-revealRow${isWelcomeExpanded ? " isOn" : ""}`}>
+  <button
+    className="iconBtn"
+    type="button"
+    onClick={() => {
+    setWelcomeSource("GOOGLE");
+    setIsWelcomeExpanded(false);
+  }}>
+    <img src={googleIcon} alt="Google" />
+  </button>
+
+  <button
+    className="iconBtn"
+    type="button"
+    onClick={() => {
+    setWelcomeSource("REDDIT");
+    setIsWelcomeExpanded(false);
+  }}>
+    <img src={redditIcon} alt="Reddit" />
+  </button>
+
+  <button
+    className="iconBtn"
+    type="button"
+    onClick={() => {
+    setWelcomeSource("NIKI");
+    setIsWelcomeExpanded(false);
+  }}>
+    <img className="isNikiIcon" src={nikiIcon} alt="Niki" />
+  </button>
+
+  <button
+    className="iconBtn"
+    type="button"
+    onClick={() => {
+    setWelcomeSource("X");
+    setIsWelcomeExpanded(false);
+  }}>
+    <img src={xIcon} alt="X" />
+  </button>
+
+  <button
+    className="iconBtn"
+    type="button"
+    onClick={() => {
+    setWelcomeSource("META");
+    setIsWelcomeExpanded(false);
+  }}>
+    <img src={metaIcon} alt="Meta" />
+  </button>
+</div>
+              </div>
+
 
             <div className="topfold-cta">
               <div className="topfold-langPick" aria-label="Language">
@@ -360,7 +438,7 @@ const TopFold = () => {
                 type="button"
                 onMouseEnter={() => setIsWelcomeHover(true)}
                 onMouseLeave={() => setIsWelcomeHover(false)}
-                onClick={() => setIsFlameLocked((v) => !v)}
+                onClick={() => setIsWelcomeExpanded(true)}
               >
                 <span className={`welcomeFace${welcomeShift ? " isShift" : ""}`}>
                   <span className="welcomeLayer welcomeLayerPrev">
