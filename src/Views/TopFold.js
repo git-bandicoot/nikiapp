@@ -4,6 +4,9 @@ import "./TopFold.css";
 import bgVideo from "../assets/videos/nikiapp_landingpage_video.mp4";
 import nikiAltLogo from "../assets/images/nikiapp_alternatetransplogo_2.png";
 import nikiSubmark from "../assets/images/nikiapp_submark_smalltransp_2.png";
+import instaIcon from "../assets/images/nikiapp_instaphotoicon_v1_trimmed.png";
+import tiktokIcon from "../assets/images/nikiapp_tiktokphotoicon_v1_trimmed.png";
+
 
 const TopFold = () => {
   return (
@@ -31,6 +34,40 @@ const TopFold = () => {
           alt="NIKI submark"
           draggable={false}
         />
+        <div className="topfold-social" aria-label="Social">
+  <a
+    className="topfold-socialLink"
+    href="https://www.instagram.com/nikkiscott_"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Instagram"
+  >
+    <img
+      className="topfold-socialIcon"
+      src={instaIcon}
+      alt=""
+      draggable={false}
+    />
+  </a>
+
+  <a
+    className="topfold-socialLink"
+    href="https://www.tiktok.com/@Nikki.scott_"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="TikTok"
+  >
+    <img
+      className="topfold-socialIcon"
+      src={tiktokIcon}
+      alt=""
+      draggable={false}
+    />
+  </a>
+</div>
+
+
+
         <nav className="topfold-nav" aria-label="Primary">
           <button className="topfold-navItem" type="button" onClick={() => {}}>
             LOGIN
