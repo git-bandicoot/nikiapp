@@ -52,7 +52,7 @@ const TopFold = () => {
 
   <a
     className="topfold-socialLink"
-    href="https://www.tiktok.com/@Nikki.scott_"
+    href="https://www.tiktok.com/@nikiaesthetic_travel"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="TikTok"
