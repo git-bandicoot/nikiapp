@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useRef} from "react";
 import "./TopFold.css";
 
 import bgVideo from "../assets/videos/nikiapp_landingpage_video.mp4";
@@ -7,11 +7,17 @@ import nikiSubmark from "../assets/images/nikiapp_submark_smalltransp_2.png";
 import instaIcon from "../assets/images/nikiapp_instaphotoicon_v1_trimmed.png";
 import tiktokIcon from "../assets/images/nikiapp_tiktokphotoicon_v1_trimmed.png";
 
+import Shop from "../components/Shop";
 
 const TopFold = () => {
+  const socialRef = useRef(null);
+  const navRef = useRef(null);
   return (
+    
     <section className="topfold" aria-label="Top fold">
+      
       <div className="topfold-bg" aria-hidden="true">
+        
         <video
           className="topfold-bgVideo"
           src={bgVideo}
@@ -26,7 +32,7 @@ const TopFold = () => {
         <div className="topfold-edge top" />
         <div className="topfold-edge bottom" />
       </div>
-
+      <Shop socialRef={socialRef} navRef={navRef} />
       <div className="topfold-content">
         <img
           className="topfold-submark"
@@ -34,7 +40,7 @@ const TopFold = () => {
           alt="NIKI submark"
           draggable={false}
         />
-        <div className="topfold-social" aria-label="Social">
+        <div className="topfold-social" aria-label="Social" ref={socialRef}>
   <a
     className="topfold-socialLink"
     href="https://www.instagram.com/nikkiscott_"
@@ -68,7 +74,7 @@ const TopFold = () => {
 
 
 
-        <nav className="topfold-nav" aria-label="Primary">
+        <nav className="topfold-nav" aria-label="Primary" ref={navRef}>
           <button className="topfold-navItem" type="button" onClick={() => {}}>
             LOGIN
           </button>
