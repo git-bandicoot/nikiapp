@@ -1,5 +1,7 @@
 html,body,#root{
   height:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
 }
 
 body{
@@ -15,4 +17,19 @@ body{
 code{
   font-family:source-code-pro,Menlo,Monaco,Consolas,"Courier New",
     monospace;
+}
+
+html,body{
+  scrollbar-width:none;        /* Firefox */
+  -ms-overflow-style:none;     /* IE/Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+  width:0;
+  height:0;
+}
+
+*::-webkit-scrollbar-thumb{
+  background:transparent;
 }
