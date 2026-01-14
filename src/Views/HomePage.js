@@ -1,8 +1,10 @@
 
 // src/Views/HomePage.js
 import React, { useState } from 'react';
-import './TopFold.css';
+import './HomePage.css';
+
 import TopFold from './TopFold.js';
+import Footer from './Footer.js';
 
 
 
@@ -16,8 +18,7 @@ const HomePage = () => {
     return (
         <div className="cafe-homepage">
             <TopFold />
-
-
+            <Footer />
         </div>
     );
 };
