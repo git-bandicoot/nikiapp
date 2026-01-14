@@ -71,3 +71,69 @@
   opacity:0.85;
   text-transform:uppercase;
 }
+
+/* =========================
+   Tablet (769px – 1024px)
+   ========================= */
+@media (min-width:769px) and (max-width:1024px){
+  .shopTopBarInner{
+    gap:8px;
+  }
+
+  .shopTopBarLabel{
+    font-size:8px;
+  }
+
+  .shopTopBarPlaceholder{
+    font-size:8px;
+  }
+
+  .shopTopBarInputRow{
+    gap:8px;
+  }
+
+  .shopTopBarInput{
+    width:200px;
+    font-size:8px;
+  }
+
+  .shopTopBarStatus{
+    font-size:8px;
+  }
+}
+
+
+/* =========================
+   Mobile (max-width: 768px)
+   ========================= */
+@media (max-width:768px){
+  .shopTopBarBanner{
+    width:100%;
+    left:0;
+    right:0;
+  }
+
+  .shopTopBarInner{
+    width:100%;
+    padding:0 12px;
+    gap:8px;
+    justify-content:space-between;
+    flex-wrap:wrap; /* allows the row to wrap cleanly on small screens */
+  }
+
+  .shopTopBarInputRow{
+    gap:8px;
+    flex-wrap:nowrap;
+  }
+
+  .shopTopBarInput{
+    width:min(220px,60vw);
+    font-size:8px;
+  }
+
+  .shopTopBarLabel,
+  .shopTopBarPlaceholder,
+  .shopTopBarStatus{
+    font-size:8px;
+  }
+}

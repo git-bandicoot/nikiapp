@@ -1,7 +1,6 @@
 html,body,#root{
   height:100%;
   overflow-x:hidden;
-  overflow-y:auto;
 }
 
 body{
@@ -11,14 +10,14 @@ body{
     sans-serif;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  overflow:hidden;
 }
 
-code{
-  font-family:source-code-pro,Menlo,Monaco,Consolas,"Courier New",
-    monospace;
+/* Default: allow normal scrolling (prevents “can’t scroll” bugs) */
+html,body{
+  overflow-y:auto;
 }
 
+/* Hide scrollbars visually (keeps scroll working) */
 html,body{
   scrollbar-width:none;        /* Firefox */
   -ms-overflow-style:none;     /* IE/Edge */
@@ -32,4 +31,28 @@ body::-webkit-scrollbar{
 
 *::-webkit-scrollbar-thumb{
   background:transparent;
+}
+
+code{
+  font-family:source-code-pro,Menlo,Monaco,Consolas,"Courier New",
+    monospace;
+}
+
+/* =========================
+   Tablet (769px – 1024px)
+   ========================= */
+@media (min-width:769px) and (max-width:1024px){
+  html,body{
+    overflow-y:auto;
+  }
+}
+
+/* =========================
+   Mobile (max-width: 768px)
+   ========================= */
+@media (max-width:768px){
+  html,body{
+    overflow-y:auto;
+    -webkit-text-size-adjust:100%;
+  }
 }
