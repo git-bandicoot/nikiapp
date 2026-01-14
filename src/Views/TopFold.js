@@ -1,49 +1,213 @@
-import React,{useEffect,useRef} from "react";
+import React,{useEffect,useRef,useState} from "react";
 import "./TopFold.css";
 
 import bgVideo from "../assets/videos/nikiapp_landingpage_video.mp4";
 import nikiAltLogo from "../assets/images/nikiapp_alternatetransplogo_2.png";
 import nikiSubmark from "../assets/images/nikiapp_submark_smalltransp_2.png";
 
-import Shop from "../components/Shop";
 import ShopGallery from "./ShopGallery";
+
+import {doc,getDoc,setDoc,serverTimestamp} from "firebase/firestore";
+import {db} from "../firebase";
 
 const TopFold = () => {
   const socialRef = useRef(null);
   const navRef = useRef(null);
 
+  const [subscribeMode,setSubscribeMode] = useState("idle"); // idle | banner | email | name | welcome | menu
+  const [subscribeText,setSubscribeText] = useState("SUBSCRIBE");
+  const [isFading,setIsFading] = useState(false);
+
+  const [email,setEmail] = useState("");
+  const [name,setName] = useState("");
+  const [welcomeName,setWelcomeName] = useState("");
+
+  const emailRef = useRef(null);
+  const nameRef = useRef(null);
+
   useEffect(() => {
     window.scrollTo(0,0);
   },[]);
 
-  const scrollToShop = () => {
-    const el = document.getElementById("shopGallery");
-    if(!el){
+  useEffect(() => {
+    const cached = localStorage.getItem("niki_subscriber_name_v1");
+    if(cached){
+      setWelcomeName(cached);
+      setSubscribeMode("welcome");
+      setSubscribeText(`WELCOME, ${cached}`);
+    }
+  },[]);
+
+  useEffect(() => {
+    if(subscribeMode === "email"){
+      requestAnimationFrame(() => {
+        if(emailRef.current){
+          emailRef.current.focus();
+        }
+      });
+    }
+
+    if(subscribeMode === "name"){
+      requestAnimationFrame(() => {
+        if(nameRef.current){
+          nameRef.current.focus();
+        }
+      });
+    }
+  },[subscribeMode]);
+
+  const normalizeEmail = (raw) => String(raw || "").trim().toLowerCase();
+  const isEmailValidish = (raw) => {
+    const v = normalizeEmail(raw);
+    if(!v){
+      return false;
+    }
+    return v.includes("@") && v.includes(".");
+  };
+
+  const swapMode = (nextMode,nextText,delayMs=240) => {
+    setIsFading(true);
+    window.setTimeout(() => {
+      setSubscribeMode(nextMode);
+      if(typeof nextText === "string"){
+        setSubscribeText(nextText);
+      }
+      setIsFading(false);
+    },delayMs);
+  };
+
+  const startSubscribeFlow = () => {
+    if(subscribeMode !== "idle"){
       return;
     }
 
-    const startY = window.scrollY;
-    const targetY = Math.round(el.getBoundingClientRect().top + window.scrollY);
-    const delta = targetY - startY;
+    swapMode("banner","LIVE THE AESTHETIC");
+    window.setTimeout(() => {
+      setSubscribeMode("email");
+    },520);
+  };
 
-    const duration = 1800;
-    const easeInCubic = (t) => t * t * t;
+  const openWelcomeMenu = () => {
+    if(subscribeMode !== "welcome"){
+      return;
+    }
+    swapMode("menu",subscribeText);
+  };
 
-    const startTime = performance.now();
+  const collapseMenu = () => {
+    if(!welcomeName){
+      swapMode("idle","SUBSCRIBE");
+      return;
+    }
+    swapMode("welcome",`WELCOME, ${welcomeName}`);
+  };
 
-    const tick = (now) => {
-      const elapsed = now - startTime;
-      const t = Math.min(1,elapsed / duration);
-      const eased = easeInCubic(t);
+  const logoutSubscribe = () => {
+    localStorage.removeItem("niki_subscriber_name_v1");
+    setWelcomeName("");
+    setEmail("");
+    setName("");
+    swapMode("idle","SUBSCRIBE");
+  };
 
-      window.scrollTo(0,Math.round(startY + delta * eased));
+  const collapseToWelcome = (finalName) => {
+    const clean = String(finalName || "").trim();
+    if(!clean){
+      return;
+    }
 
-      if(t < 1){
-        requestAnimationFrame(tick);
+    setWelcomeName(clean);
+    localStorage.setItem("niki_subscriber_name_v1",clean);
+
+    swapMode("welcome",`WELCOME, ${clean}`,180);
+
+    setEmail("");
+    setName("");
+  };
+
+  const checkSubscriberByEmail = async (rawEmail) => {
+    const cleanEmail = normalizeEmail(rawEmail);
+    const ref = doc(db,"subscribers",cleanEmail);
+    const snap = await getDoc(ref);
+    return {exists:snap.exists(),data:snap.exists() ? snap.data() : null,cleanEmail};
+  };
+
+  const upsertSubscriber = async ({cleanEmail,displayName}) => {
+    const ref = doc(db,"subscribers",cleanEmail);
+    await setDoc(
+      ref,
+      {
+        email:cleanEmail,
+        displayName:String(displayName || "").trim(),
+        updatedAt:serverTimestamp(),
+        createdAt:serverTimestamp(),
+      },
+      {merge:true}
+    );
+  };
+
+  const onEmailSubmit = async () => {
+    const cleanEmail = normalizeEmail(email);
+
+    if(!isEmailValidish(cleanEmail)){
+      swapMode(subscribeMode,"ENTER A VALID EMAIL");
+      window.setTimeout(() => {
+        setSubscribeText("LIVE THE AESTHETIC");
+      },900);
+      return;
+    }
+
+    try{
+      const res = await checkSubscriberByEmail(cleanEmail);
+
+      // webhook placeholder:
+      // await fetch("YOUR_WEBHOOK_URL",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:res.cleanEmail})});
+
+      if(res.exists){
+        const existingName = res.data?.displayName;
+        if(existingName){
+          collapseToWelcome(existingName);
+          return;
+        }
+
+        setSubscribeMode("name");
+        setSubscribeText("WHO DO YOU PREFER TO BE CALLED?");
+        return;
       }
-    };
 
-    requestAnimationFrame(tick);
+      setSubscribeMode("name");
+      setSubscribeText("WHO DO YOU PREFER TO BE CALLED?");
+    }catch(e){
+      console.error("Subscribe email check failed:",e);
+      swapMode(subscribeMode,"TRY AGAIN");
+      window.setTimeout(() => {
+        setSubscribeText("LIVE THE AESTHETIC");
+      },900);
+    }
+  };
+
+  const onNameSubmit = async () => {
+    const cleanEmail = normalizeEmail(email);
+    const cleanName = String(name || "").trim();
+
+    if(!cleanName){
+      swapMode(subscribeMode,"NAME REQUIRED");
+      window.setTimeout(() => {
+        setSubscribeText("WHO DO YOU PREFER TO BE CALLED?");
+      },900);
+      return;
+    }
+
+    try{
+      await upsertSubscriber({cleanEmail,displayName:cleanName});
+      collapseToWelcome(cleanName);
+    }catch(e){
+      console.error("Subscribe name save failed:",e);
+      swapMode(subscribeMode,"TRY AGAIN");
+      window.setTimeout(() => {
+        setSubscribeText("WHO DO YOU PREFER TO BE CALLED?");
+      },900);
+    }
   };
 
   return (
@@ -73,7 +237,6 @@ const TopFold = () => {
             draggable={false}
           />
 
-          {/* Invisible anchor so Shop can measure socialRef without icons being shown */}
           <div
             className="topfold-socialAnchor"
             aria-hidden="true"
@@ -81,9 +244,114 @@ const TopFold = () => {
           />
 
           <nav className="topfold-nav" aria-label="Primary" ref={navRef}>
-            <button className="topfold-navItem" type="button" onClick={() => {}}>
-              LOGIN
-            </button>
+            <div
+  className={[
+    "topfold-subscribeWrap",
+    (subscribeMode === "email" || subscribeMode === "name") ? "isActive" : "",
+    isFading ? "isFading" : "",
+  ].join(" ")}
+>
+              {(subscribeMode === "idle" || subscribeMode === "banner") && (
+                <button
+                  className="topfold-navItem topfold-subscribeBtn"
+                  type="button"
+                  onClick={startSubscribeFlow}
+                >
+                  {subscribeText}
+                </button>
+              )}
+
+              {subscribeMode === "welcome" && (
+                <button
+                  className="topfold-navItem topfold-subscribeBtn"
+                  type="button"
+                  onClick={openWelcomeMenu}
+                >
+                  {subscribeText}
+                </button>
+              )}
+
+              {subscribeMode === "menu" && (
+                <div className="topfold-subscribeMenu" aria-label="Welcome menu">
+                  <button
+                    className="topfold-navItem"
+                    type="button"
+                    onClick={logoutSubscribe}
+                  >
+                    LOGOUT
+                  </button>
+
+                  <button
+                    className="topfold-navItem topfold-collapseHint"
+                    type="button"
+                    onClick={collapseMenu}
+                  >
+                    COLLAPSE
+                  </button>
+                </div>
+              )}
+
+              {subscribeMode === "email" && (
+                <div className="topfold-subscribeInline" aria-label="Subscribe email prompt">
+                  <div className="topfold-subscribeLabel">LIVE THE AESTHETIC</div>
+
+                  <input
+                    ref={emailRef}
+                    className="topfold-subscribeInput"
+                    type="email"
+                    value={email}
+                    placeholder="your@email.com"
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => {
+                      if(e.key === "Enter"){
+                        onEmailSubmit();
+                      }
+                    }}
+                    autoComplete="email"
+                    inputMode="email"
+                  />
+
+                  <button
+                    className="topfold-subscribeGo"
+                    type="button"
+                    onClick={onEmailSubmit}
+                    aria-label="Submit email"
+                  >
+                    →
+                  </button>
+                </div>
+              )}
+
+              {subscribeMode === "name" && (
+                <div className="topfold-subscribeInline" aria-label="Subscribe name prompt">
+                  <div className="topfold-subscribeLabel">WHO DO YOU PREFER TO BE CALLED?</div>
+
+                  <input
+                    ref={nameRef}
+                    className="topfold-subscribeInput"
+                    type="text"
+                    value={name}
+                    placeholder="your name"
+                    onChange={(e) => setName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if(e.key === "Enter"){
+                        onNameSubmit();
+                      }
+                    }}
+                    autoComplete="name"
+                  />
+
+                  <button
+                    className="topfold-subscribeGo"
+                    type="button"
+                    onClick={onNameSubmit}
+                    aria-label="Submit name"
+                  >
+                    →
+                  </button>
+                </div>
+              )}
+            </div>
 
             <button
               className="topfold-navItem"
@@ -93,7 +361,6 @@ const TopFold = () => {
                 console.log("shopGallery found?",!!el);
                 if(el){
                   el.scrollIntoView({behavior:"smooth",block:"start"});
-                  
                 }
               }}
             >
@@ -124,8 +391,6 @@ const TopFold = () => {
           </div>
         </div>
 
-        {/* Moved DOWN so refs definitely exist before Shop measures */}
-        <Shop socialRef={socialRef} navRef={navRef} />
       </section>
 
       <ShopGallery />

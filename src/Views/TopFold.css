@@ -313,3 +313,182 @@
     letter-spacing:0.14em;
   }
 }
+
+/* =========================
+   SUBSCRIBE INLINE FLOW
+   ========================= */
+.topfold-subscribeWrap{
+  display:flex;
+  align-items:center;
+  position:relative;
+  transition:transform 240ms ease,opacity 240ms ease;
+}
+
+.topfold-subscribeWrap.isShifted{
+  transform:translateX(-12px);
+}
+
+.topfold-subscribeBtn{
+  white-space:nowrap;
+}
+
+.topfold-subscribeInline{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.topfold-subscribeLabel{
+  color:var(--navColor);
+  font-size:var(--navSize);
+  font-weight:var(--navWeight);
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  font-family:inherit;
+  white-space:nowrap;
+}
+
+.topfold-subscribeInput{
+  border:none;
+  outline:none;
+  background:transparent;
+
+  color:var(--navColor);
+  font-size:var(--navSize);
+  font-weight:var(--navWeight);
+  letter-spacing:0.06em;
+  font-family:inherit;
+
+  width:260px;
+  min-width:180px; /* allows 100px+ feel even when tight */
+  max-width:360px;
+
+  padding:2px 0;
+  border-bottom:1px solid rgb(from var(--navColor) r g b / 0.65);
+}
+
+.topfold-subscribeInput::placeholder{
+  color:rgb(from var(--navColor) r g b / 0.55);
+}
+
+.topfold-subscribeGo{
+  border:none;
+  background:transparent;
+  padding:0;
+  margin:0;
+  cursor:pointer;
+
+  color:var(--navColor);
+  font-size:calc(var(--navSize) + 4px);
+  font-weight:var(--navWeight);
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-family:inherit;
+
+  transform:translateY(-1px);
+}
+
+.topfold-subscribeGo:active{
+  transform:translateY(0px);
+}
+
+/* Tablet */
+@media (min-width:769px) and (max-width:1024px){
+  .topfold-subscribeInput{
+    width:220px;
+    min-width:160px;
+    max-width:320px;
+  }
+}
+
+/* Mobile */
+@media (max-width:768px){
+  .topfold-subscribeLabel{
+    display:none; /* keeps nav from wrapping */
+  }
+
+  .topfold-subscribeInput{
+    width:170px;
+    min-width:140px;
+    max-width:220px;
+  }
+}
+
+/* =========================
+   SUBSCRIBE / WELCOME SLOT (NO SHIFT)
+   ========================= */
+.topfold-subscribeWrap{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+
+  /* fixed slot so text changes don't move the nav */
+  width:360px;
+  max-width:360px;
+
+  transition:opacity 240ms ease;
+}
+
+.topfold-subscribeWrap.isFading{
+  opacity:0;
+}
+
+.topfold-subscribeBtn{
+  white-space:nowrap;
+}
+
+.topfold-subscribeMenu{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.topfold-collapseHint{
+  opacity:0.72;
+}
+
+.topfold-collapseHint:hover{
+  opacity:1;
+}
+
+/* Keep your existing inline styles; just ensure input can't expand slot */
+.topfold-subscribeInline{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+}
+
+/* Tablet */
+@media (min-width:769px) and (max-width:1024px){
+  .topfold-subscribeWrap{
+    width:320px;
+    max-width:320px;
+  }
+}
+
+/* Mobile */
+@media (max-width:768px){
+  .topfold-subscribeWrap{
+    width:220px;
+    max-width:220px;
+  }
+}
+
+/* Reserve width ONLY during subscribe flow (email/name) */
+.topfold-subscribeWrap{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  flex-shrink:0;
+}
+
+.topfold-subscribeWrap.isActive{
+  width:360px;
+  max-width:360px;
+}
+
+.topfold-subscribeWrap:not(.isActive){
+  width:auto;
+  max-width:none;
+}
