@@ -184,3 +184,132 @@
 .topfold-socialIcon{
   -webkit-user-drag:none;
 }
+
+
+/* =========================
+   Tablet (769px – 1024px)
+   ========================= */
+@media (min-width:769px) and (max-width:1024px){
+  :root{
+    --topBarHeight:56px;
+    --bottomBarHeight:28px;
+
+    --navTop:24px;
+    --navRight:24px;
+    --navSize:10px;
+    --navGap:18px;
+  }
+
+  .topfold-logo{
+    width:clamp(280px,46vw,440px);
+  }
+
+  .topfold-tagline{
+    width:80%;
+    margin-top:16px;
+  }
+
+  .topfold-taglineBox{
+    width:640px;
+    max-width:calc(100% - 40px);
+    padding:14px 18px;
+    border-radius:10px;
+  }
+
+  .topfold-taglineLine{
+    font-size:16px;
+    line-height:1.35;
+  }
+
+  .topfold-submark{
+    left:16px;
+    height:48px;
+  }
+
+  .topfold-social{
+    left:calc(16px + 48px + 12px);
+    gap:10px;
+  }
+
+  .topfold-socialLink{
+    width:26px;
+    height:26px;
+  }
+
+  .topfold-socialIcon{
+    width:20px;
+    height:20px;
+  }
+}
+
+
+/* =========================
+   Mobile (max-width: 768px)
+   ========================= */
+@media (max-width:768px){
+  :root{
+    --topBarHeight:52px;
+    --bottomBarHeight:26px;
+
+    --navTop:18px;
+    --navRight:16px;
+    --navSize:9px;
+    --navGap:14px;
+  }
+
+  .topfold{
+    height:100dvh; /* better on mobile browsers */
+  }
+
+  .topfold-content{
+    padding:0 14px;
+  }
+
+  .topfold-logo{
+    width:clamp(220px,72vw,360px);
+  }
+
+  .topfold-tagline{
+    width:100%;
+    margin-top:14px;
+  }
+
+  .topfold-taglineBox{
+    width:100%;
+    max-width:calc(100% - 28px);
+    padding:12px 14px;
+    border-radius:10px;
+  }
+
+  .topfold-taglineLine{
+    font-size:14px;
+    line-height:1.35;
+  }
+
+  .topfold-submark{
+    left:12px;
+    height:42px;
+    transform:translateY(-50%);
+  }
+
+  .topfold-social{
+    left:calc(12px + 42px + 10px);
+    gap:10px;
+    transform:translateY(-50%);
+  }
+
+  .topfold-socialLink{
+    width:26px;
+    height:26px;
+  }
+
+  .topfold-socialIcon{
+    width:20px;
+    height:20px;
+  }
+
+  /* Keep nav in one row, but tighten letter spacing so it doesn't wrap */
+  .topfold-navItem{
+    letter-spacing:0.14em;
+  }
+}

@@ -45,3 +45,49 @@
     transform: rotate(360deg);
   }
 }
+
+/* =========================
+   Tablet (769px – 1024px)
+   ========================= */
+@media (min-width:769px) and (max-width:1024px){
+  .App{
+    height:100%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    text-align:center;
+  }
+
+  .App-logo{
+    height:32vmin;
+  }
+
+  .App-header{
+    min-height:100dvh;
+    font-size:calc(10px + 1.8vmin);
+  }
+}
+
+
+/* =========================
+   Mobile (max-width: 768px)
+   ========================= */
+@media (max-width:768px){
+  .App{
+    height:100%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    text-align:center;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .App-logo{
+    height:28vmin;
+  }
+
+  .App-header{
+    min-height:100dvh;
+    font-size:calc(10px + 1.6vmin);
+    padding:16px;
+    box-sizing:border-box;
+  }
+}

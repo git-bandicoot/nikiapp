@@ -5,3 +5,21 @@
   padding:0;
   margin:0;
 }
+
+/* =========================
+   Tablet (769px – 1024px)
+   ========================= */
+@media (min-width:769px) and (max-width:1024px){
+  .cafe-homepage{
+    min-height:100dvh;
+  }
+}
+
+/* =========================
+   Mobile (max-width: 768px)
+   ========================= */
+@media (max-width:768px){
+  .cafe-homepage{
+    min-height:100dvh;
+  }
+}

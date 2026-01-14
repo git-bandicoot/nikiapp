@@ -108,3 +108,88 @@
   height:100%;
   display:block;
 }
+
+/* =========================
+   Tablet (769px – 1024px)
+   ========================= */
+@media (min-width:769px) and (max-width:1024px){
+  :root{
+    --footerH:68px;
+    --footerPadX:22px;
+    --footerPadY:16px;
+
+    --footerFontSize:12px;
+    --footerLogoH:32px;
+
+    --footerIcon:20px;
+    --footerIconGap:22px;
+  }
+
+  .footer-inner{
+    gap:18px;
+  }
+
+  .footer-line{
+    max-width:64vw;
+  }
+
+  .footer-right{
+    top:-4px;
+    right:10px;
+  }
+}
+
+
+/* =========================
+   Mobile (max-width: 768px)
+   ========================= */
+@media (max-width:768px){
+  :root{
+    --footerH:auto;            /* allow natural height on mobile */
+    --footerPadX:14px;
+    --footerPadY:14px;
+
+    --footerFontSize:11px;
+    --footerLogoH:28px;
+
+    --footerIcon:20px;
+    --footerIconGap:18px;
+  }
+
+  .footer{
+    align-items:stretch;
+  }
+
+  .footer-inner{
+    padding:var(--footerPadY) var(--footerPadX);
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;            /* allows icons to drop if needed */
+  }
+
+  .footer-left{
+    align-items:flex-start;
+    gap:12px;
+    min-width:0;
+    flex:1 1 260px;            /* lets text take the row */
+  }
+
+  .footer-text{
+    font-size:var(--footerFontSize);
+  }
+
+  .footer-line{
+    white-space:normal;        /* allow wrapping on small screens */
+    overflow:visible;
+    text-overflow:clip;
+    max-width:100%;
+  }
+
+  .footer-right{
+    top:0;
+    right:0;
+    align-items:center;
+    flex:0 0 auto;
+  }
+}

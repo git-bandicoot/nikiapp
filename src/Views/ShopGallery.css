@@ -317,3 +317,224 @@
     min-height:520px;
   }
 }
+
+/* =========================
+   Tablet (769px – 1024px)
+   ========================= */
+@media (min-width:769px) and (max-width:1024px){
+  :root{
+    --descArchScale:0.95;
+    --descArchX:0px;
+    --descArchY:0px;
+    --descArchW:460px;
+
+    --panelW:440px;
+    --panelH:480px;
+    --panelX:0px;
+    --panelY:0px;
+
+    --btnW:190px;
+    --btnH:40px;
+    --btnY:0px;
+
+    --titleSize:18px;
+    --bodySize:13px;
+    --priceSize:26px;
+  }
+
+  .shopGallery{
+    min-height:100dvh;
+  }
+
+  .shopGallery-inner{
+    width:min(980px,calc(100% - 56px));
+    padding:110px 0 64px;
+  }
+
+  .shopGallery-titleLogo{
+    height:110px;
+  }
+
+  .shopGallery-titleStrong{
+    top:-44px;
+    font-size:24px;
+  }
+
+  .shopGallery-grid{
+    gap:34px;
+  }
+
+  .shopGallery-left{
+    min-height:380px;
+  }
+
+  .shopGallery-arc{
+    transform:scale(1.25);
+  }
+
+  .shopGallery-cards{
+    width:320px;
+    gap:14px;
+    transform:translate(0px,56px);
+  }
+
+  .shopGallery-right{
+    min-height:500px;
+  }
+
+  .shopGallery-panel{
+    grid-template-rows: 64px 1fr 110px 100px;
+  }
+
+  .shopGallery-slotInner{
+    padding:0 28px;
+  }
+
+  .shopGallery-titleText{
+    transform:translate(-18px,16px);
+  }
+
+  .shopGallery-slotBody{
+    transform:translate(-18px,16px);
+  }
+
+  .shopGallery-bodyText{
+    transform:translate(0px,26px);
+    max-width:46ch;
+    line-clamp:8;
+    -webkit-line-clamp:8;
+  }
+
+  .shopGallery-priceText{
+    transform:translate(-18px,44px);
+  }
+
+  .shopGallery-panelBtn{
+    font-size:24px;
+    transform:translate(-18px,16px);
+  }
+
+  .shopGallery-panelBtn:active{
+    transform:translate(-18px,17px);
+  }
+}
+
+
+/* =========================
+   Mobile (max-width: 768px)
+   ========================= */
+@media (max-width:768px){
+  :root{
+    --descArchScale:0.88;
+    --descArchX:0px;
+    --descArchY:0px;
+    --descArchW:360px;
+
+    --panelW:320px;
+    --panelH:430px;
+    --panelX:0px;
+    --panelY:0px;
+
+    --btnW:176px;
+    --btnH:38px;
+    --btnY:0px;
+
+    --titleSize:16px;
+    --bodySize:12px;
+    --priceSize:22px;
+  }
+
+  .shopGallery{
+    min-height:100dvh;
+  }
+
+  .shopGallery-inner{
+    width:calc(100% - 28px);
+    padding:96px 0 54px;
+  }
+
+  .shopGallery-header{
+    top:8px;
+  }
+
+  .shopGallery-title{
+    gap:10px;
+  }
+
+  .shopGallery-titleLogo{
+    height:86px;
+  }
+
+  .shopGallery-titleStrong{
+    top:-34px;
+    font-size:18px;
+    letter-spacing:0.22em;
+  }
+
+  .shopGallery-grid{
+    gap:26px;
+  }
+
+  .shopGallery-left{
+    min-height:auto;
+  }
+
+  .shopGallery-arc{
+    transform:scale(1.12);
+  }
+
+  .shopGallery-cards{
+    width:min(330px,100%);
+    gap:12px;
+    transform:translate(0px,42px);
+  }
+
+  .shopGallery-right{
+    min-height:460px;
+  }
+
+  .shopGallery-descArch{
+    top:58%;
+  }
+
+  .shopGallery-panel{
+    grid-template-rows: 56px 1fr 96px 92px;
+  }
+
+  .shopGallery-slotInner{
+    padding:0 22px;
+  }
+
+  .shopGallery-titleText{
+    transform:translate(-12px,12px);
+  }
+
+  .shopGallery-slotBody{
+    transform:translate(-12px,12px);
+  }
+
+  .shopGallery-bodyText{
+    transform:translate(0px,20px);
+    max-width:42ch;
+    line-clamp:9;
+    -webkit-line-clamp:9;
+  }
+
+  .shopGallery-bodyText ul{
+    margin:14px auto 0;
+    padding-left:20px;
+  }
+
+  .shopGallery-priceText{
+    transform:translate(-12px,34px);
+  }
+
+  .shopGallery-panelBtn{
+    font-size:20px;
+    transform:translate(-12px,12px);
+  }
+
+  .shopGallery-panelBtn:active{
+    transform:translate(-12px,13px);
+  }
+}
