@@ -25,6 +25,24 @@ const TopFold = () => {
   const emailRef = useRef(null);
   const nameRef = useRef(null);
 
+  const welcomeCooldownMs = 15000;
+  const welcomeCooldownKey = "niki_welcome_click_disabled_until_v1";
+
+  const nowMs = () => Date.now();
+
+  const getWelcomeDisabledUntil = () => {
+    const raw = localStorage.getItem(welcomeCooldownKey);
+    const n = raw ? Number(raw) : 0;
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  const setWelcomeCooldown = () => {
+    const until = nowMs() + welcomeCooldownMs;
+    localStorage.setItem(welcomeCooldownKey,String(until));
+  };
+
+  const isWelcomeDisabled = () => nowMs() < getWelcomeDisabledUntil();
+
   useEffect(() => {
     window.scrollTo(0,0);
   },[]);
@@ -88,9 +106,14 @@ const TopFold = () => {
   };
 
   const openWelcomeMenu = () => {
+    if(isWelcomeDisabled()){
+      return;
+    }
+
     if(subscribeMode !== "welcome"){
       return;
     }
+
     swapMode("menu",subscribeText);
   };
 
@@ -118,6 +141,8 @@ const TopFold = () => {
 
     setWelcomeName(clean);
     localStorage.setItem("niki_subscriber_name_v1",clean);
+
+    setWelcomeCooldown();
 
     swapMode("welcome",`WELCOME, ${clean}`,180);
 
@@ -245,12 +270,12 @@ const TopFold = () => {
 
           <nav className="topfold-nav" aria-label="Primary" ref={navRef}>
             <div
-  className={[
-    "topfold-subscribeWrap",
-    (subscribeMode === "email" || subscribeMode === "name") ? "isActive" : "",
-    isFading ? "isFading" : "",
-  ].join(" ")}
->
+              className={[
+                "topfold-subscribeWrap",
+                (subscribeMode === "email" || subscribeMode === "name") ? "isActive" : "",
+                isFading ? "isFading" : "",
+              ].join(" ")}
+            >
               {(subscribeMode === "idle" || subscribeMode === "banner") && (
                 <button
                   className="topfold-navItem topfold-subscribeBtn"
@@ -266,6 +291,8 @@ const TopFold = () => {
                   className="topfold-navItem topfold-subscribeBtn"
                   type="button"
                   onClick={openWelcomeMenu}
+                  disabled={isWelcomeDisabled()}
+                  aria-disabled={isWelcomeDisabled()}
                 >
                   {subscribeText}
                 </button>
@@ -367,9 +394,20 @@ const TopFold = () => {
               SHOP
             </button>
 
-            <button className="topfold-navItem" type="button" onClick={() => {}}>
-              CONTACT
-            </button>
+            <button
+  className="topfold-navItem"
+  type="button"
+  onClick={() => {
+    const to = "n.lynnscott@gmail.com";
+    const subject = encodeURIComponent("NIKI — Contact");
+    const body = encodeURIComponent("Hi NIKI,\n\n");
+    const href = `mailto:${to}?subject=${subject}&body=${body}`;
+
+    window.open(href,"_blank","noopener,noreferrer");
+  }}
+>
+  CONTACT
+</button>
           </nav>
 
           <img

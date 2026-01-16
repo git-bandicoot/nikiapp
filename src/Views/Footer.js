@@ -7,7 +7,7 @@ import tiktokIcon from "../assets/images/nikiapp_tiktokphotoicon_v2.png";
 
 const Footer = () => {
   const yearText = "Copyright 2020 - 2026.";
-  const contactHref = "/contact";
+  const contactHref = "mailto:n.lynnscott@gmail.com?subject=NIKI%20—%20Contact&body=Hi%20NIKI,%0A%0A";
 
   return (
     <footer className="footer" aria-label="Site footer">
@@ -17,9 +17,14 @@ const Footer = () => {
           <div className="footer-text">
             <div className="footer-line">
               Need support? Custom itinerary? Collaborate?{" "}
-              <a className="footer-link" href={contactHref}>
-                Contact Niki.
-              </a>
+              <a
+  className="footer-link"
+  href={contactHref}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Contact Niki.
+</a>
             </div>
             <div className="footer-line">{yearText}</div>
           </div>
